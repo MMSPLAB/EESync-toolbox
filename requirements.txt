@@ -1,0 +1,10 @@
+# requirements.txt
+# Project dependencies.
+# Install with:  pip install -r requirements.txt
+
+pyshimmer
+matplotlib
+scipy
+numpy
+pyserial
+pylsl
