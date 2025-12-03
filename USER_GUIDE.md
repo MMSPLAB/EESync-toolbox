@@ -30,7 +30,7 @@ It is possible to record **sticky events** and **instant triggers** (spikes).
 - **CSV export:** Asynchronous CSV writer with periodic flushing and idle detection.  
 - **Telemetry & logging:** Centralized logs and periodic health checks.
 
-## What’s not included
+## What is not included
 - Offline analytics or statistics beyond CSV export.  
 - Device configuration tools: communication is only oriented toward acquisition (read-only).  
 - Automated device and configuration discovery.
@@ -108,12 +108,12 @@ py -3 -m venv .venv
 python -m pip install --upgrade pip
 ```
 
-### 3.2 Additional software
+### 3.2 Additional software (required)
 - **Consensys (free version):** For Shimmer sensor configuration (sampling rate, enabled channels, and port identification).  
-  Download: https://www.shimmersensing.com/support/wireless-sensor-networks-download/
+  Free download (last accessed 2025-12-03): https://www.shimmersensing.com/support/wireless-sensor-networks-download/
 
 - **Unicorn Suite:** For initial pairing and LSL stream activation.  
-  Download: https://www.gtec.at/product/unicorn-suite/
+  Free download (last accessed 2025-12-03): https://www.gtec.at/product/unicorn-suite/
 
 
 ### 3.3 Shimmer connection and configuration
@@ -186,6 +186,8 @@ Below is a minimal example of how a sensor instance is defined inside `settings.
 
 
 # 5. Launching the Application
+
+Please, consider that some steps may be skipped depending on the devices you are using.
 
 ### 5.1 Start Unicorn LSL stream
 - Open the _Unicorn LSL_ program (accessible also via the _Unicorn Suite_ program)
