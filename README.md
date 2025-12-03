@@ -59,6 +59,6 @@ python -m pip install --upgrade pip
 - **Changelog:** See the repository releases page
 
 ### Documentation
-- **Demo:** video available here(https://drive.google.com/file/d/1JGyDp-8ToJPpTCh9yDPB5iulE1tGAFWD/view?usp=drive_link).
+- **Demo:** video available [here](https://drive.google.com/file/d/1JGyDp-8ToJPpTCh9yDPB5iulE1tGAFWD/view?usp=drive_link).
 - **User Guide:** see [USER_GUIDE.md](./USER_GUIDE.md)  
 - **Technical Documentation:** see [TECHNICAL_DOC.md](./TECHNICAL_DOC.md)
