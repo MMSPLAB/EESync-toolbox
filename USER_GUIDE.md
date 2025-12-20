@@ -98,26 +98,69 @@ pip install -r requirements.txt
 
 
 # 3. Installation
+_To achieve optimal results and reduce potential issues, follow the instructions in the order provided._
 
-### 3.1 Quick Start (recommended)
-Run the following commands in **Windows PowerShell** from inside the project folder:
-
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-```
-
-### 3.2 Additional software (required)
+### 3.1 Additional software (required)
 - **Consensys (free version):** For Shimmer sensor configuration (sampling rate, enabled channels, and port identification).  
   Free download (last accessed 2025-12-03): https://www.shimmersensing.com/support/wireless-sensor-networks-download/
 
 - **Unicorn Suite:** For initial pairing and LSL stream activation.  
   Free download (last accessed 2025-12-03): https://www.gtec.at/product/unicorn-suite/
 
+- **Visual Studio Code**: (Recommended) Easy to use for editing settings and running the project, any other editor works.  
+Free download (last accessed 2025-12-03): https://code.visualstudio.com/download
 
-### 3.3 Shimmer connection and configuration
+### 3.2 Quick Start
+1. Download the project folder from GitHub and extract it.
+2. Open the entire project folder using your preferred code editor (Visual Studio Code recommended).
+3. Run the following commands in **Windows PowerShell** from inside the project folder:
+    ```powershell
+    py -3 -m venv .venv
+    .\.venv\Scripts\Activate.ps1
+    python -m pip install --upgrade pip
+    ```
+    These commands create a virtual environment, which isolates the project’s dependencies from the system-wide Python installation. This prevents version conflicts and ensures the application runs with the correct package configuration.  
+
+    If you encounter permission or script-execution issues, run the following command with administrator privileges (launch PowerShell or your editor as Administrator):
+    ```powershell
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    ```
+
+4. Your editor may prompt you to select the newly created virtual environment as the default interpreter. It is recommended to confirm by clicking "Yes".  
+If you missed the prompt or your editor did not display it, you can manually set the virtual environment as the default interpreter by running the command below in your editor’s PowerShell terminal (inside the project folder):
+    ```powershell
+    mkdir .vscode -ErrorAction SilentlyContinue; 
+    '{
+        "python.defaultInterpreterPath": ".venv\\Scripts\\python.exe"
+    }' | Out-File .vscode/settings.json -Encoding utf8
+    ```
+
+### 3.3 Documentation
+Before using each device with its corresponding software, **it is strongly recommended to consult the official documentation provided by the manufacturer**.
+In case of errors or malfunctions, always refer to the device-specific or software-specific documentation for troubleshooting and resolution instructions.
+- **Shimmer documentation**: https://www.shimmersensing.com/support/wireless-sensor-networks-documentation/
+- **g.tec Unicorn documentation**: https://drive.google.com/drive/folders/1thOzUi5tYtxE3xOm2rxmL1ckGHQaZsr4?usp=drive_link
+
+### 3.4 Unicorn Hybrid Black connection and configuration
+1. Open _Device Manager_ and select your computer’s Bluetooth module: right-click > **Disable**. There might be multiple modules listed in the Bluetooth section; if the correct one is disabled, all other modules should disappear as a consequence.
+
+2. Plug in the provided USB Bluetooth adapter.
+
+3. In Device Manager, verify that the adapter has been successfully recognized. If not, a reboot generally resolves the issue. If the computer’s internal Bluetooth adapter has been successfully disabled, the external USB adapter will be automatically enabled.
+
+4. In Device Manager, go to the Bluetooth section. Right-click **Generic Bluetooth Radio** > **Properties** > **Power Management**. Deselect **Allow the computer to turn off this device to save power**.
+
+5. Proceed to connect the Unicorn to the PC using the _Unicorn Suite_ program.
+
+> For any error or malfunction during the connection process, please refer to the Unicorn Suite documentation after device battery level check.
+
+> After completing the acquisition process, disconnect the external USB Bluetooth adapter and re-enable the computer’s original Bluetooth interface to restore the system to its standard configuration.
+
+### 3.5 Shimmer connection and configuration
 To connect the device, simply enable Bluetooth and turn on the Shimmer device; go to _Settings > Bluetooth > Add new device_ and pair.  
+
+> For any error or malfunction during the connection process, please refer to the Shimmer documentation after device battery level check.
+
 
 The default sampling frequency for Shimmer devices is 128 Hz. However, it may vary depending on the application; **it is always better to check that the configuration in the code** (`settings.py`) **is correct and corresponds to the Shimmer device settings**. The correct parameters can be checked or changed using the _Consensys_ software.  
 The key values are:
@@ -127,20 +170,53 @@ The key values are:
 - **PPG Channel** for GSR+ unit _(usually A\_13, may be A\_12)_
 - **EMG channels and bits** for EXG unit _(usually 24 bits, may be 16 bits)_
 
-### 3.4 Unicorn Hybrid Black connection and configuration
-To connect the device, follow these steps:
-1. Open _Device Manager_, select your computer’s Bluetooth module: right-click > **Disable**.
-2. Plug in the provided USB Bluetooth adapter.
-3. In _Device Manager_, make sure that the adapter has been successfully recognized. If not, a reboot generally solves the issue.
-4. In _Device Manager_, go to the Bluetooth section. Right-click **Generic Bluetooth Radio** > **Properties** > **Power Management**. Deselect **Allow the computer to turn off this device to save power**.
-5. Proceed to connect the Unicorn to the PC using the _Unicorn Suite_ program.
-> For any error or malfunction during the connection process, please refer to the Unicorn Suite documentation.
 
-### 3.5 Configuration
+
+### 3.6 Optional system power configuration
+For optimal performance and to minimize the risk of interruptions during device operation, it is recommended to use the computer’s **Performance power mode**. If a predefined Performance profile is not available, you may manually adjust the system’s power settings as follows:
+
+1. Open the **Control Panel** and select **Power Options**.
+
+2. Choose the High Performance plan, if available.
+
+3. If no High Performance plan is listed, select your current plan and click Change plan settings.
+
+4. Set both Turn off the display and Put the computer to sleep to Never while the computer is plugged in.
+
+5. Click Change advanced power settings and review the following options:
+
+    - Processor power management:
+
+        - Set Minimum processor state to 100%.
+        - Set Maximum processor state to 100%.
+
+    - USB settings → USB selective suspend setting:
+
+        - Set to Disabled.
+
+    - Wireless Adapter Settings → Power Saving Mode:
+
+        - Set to Maximum Performance.
+
+6. Save all changes and close the window.
+
+These adjustments ensure that the system maintains consistent performance and avoids power-saving behaviors that may interfere with device communication.
+
+> After completing the acquisition process, you may wish to restore the power settings to their previous values according to your standard system configuration or energy-saving preferences.
+
+
+### 3.7 Code configuration
 The configuration file **`settings.py`** defines all essential keys and adjustable parameters. It can be edited to customize the system according to user needs. All project modules include **safe fallbacks** for missing values.  
 > If issues arise or advanced customization is required, refer to [TECHNICAL_DOC.md](./TECHNICAL_DOC.md).
 
-#### 3.5.1 Shimmer configuration
+#### *Important:*
+- ***Always save `settings.py` after any modification.***
+- ***Always disable unused devices in `settings.py`.***
+
+
+
+
+#### 3.7.1 Shimmer configuration
 <p align="center">
   <img src="assets/img/shimmer_config.png" width="55%">
   <img src="assets/img/settings_shimmer_config.png" width="35%">
@@ -190,7 +266,9 @@ Below is a minimal example of how a sensor instance is defined inside `settings.
 Please, consider that some steps may be skipped depending on the devices you are using.
 
 ### 5.1 Start Unicorn LSL stream
-- Open the _Unicorn LSL_ program (accessible also via the _Unicorn Suite_ program)
+- Open the _Unicorn LSL_ program, accessible through the _Unicorn Suite_ (you need to download it the first time). Once opened, you can pin the application to the taskbar for quicker access.
+    > If the initial download of *Unicorn LSL* fails, wait and retry, or refer to the official documentation.
+
 - Select **each channel in one stream**
 - Define a stream name **matching the `settings.py` value**, default is _EEG_
 - Click **Open**, then **Start**  
@@ -201,12 +279,16 @@ Please, consider that some steps may be skipped depending on the devices you are
 </p>
 
 ### 5.2 Start acquisition
-- If open, close Consensys software (it may interfere with Shimmer communication)
+- **Always close the Consensys software**, or ensure that all devices are disconnected from it, to avoid interference with Shimmer communication.
 - Run the script via your editor’s GUI
 - Alternatively, run the base command `python main.py` inside the project folder
 
+> When using *Unicorn LSL*, red terminal messages are expected. Successful execution is indicated by the live plot appearing; consult logs if issues arise.
+
+> Performance may be significantly reduced on less powerful hardware, especially when screen recording is enabled or many applications and browser tabs (e.g., Google Chrome) are open.
 
 # 6. Data Outputs
+_To properly view CSV files, it is recommended to install a CSV extension for your editor. Alternatively, CSV files can be opened with external applications._
 
 ### 6.1 Signals CSV export scheme
 `data/synced/synced_<session_id>.csv`
