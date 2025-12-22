@@ -139,7 +139,8 @@ If you missed the prompt or your editor did not display it, you can manually set
 Before using each device with its corresponding software, **it is strongly recommended to consult the official documentation provided by the manufacturer**.
 In case of errors or malfunctions, always refer to the device-specific or software-specific documentation for troubleshooting and resolution instructions.
 - **Shimmer documentation**: https://www.shimmersensing.com/support/wireless-sensor-networks-documentation/
-- **g.tec Unicorn documentation**: https://drive.google.com/drive/folders/1thOzUi5tYtxE3xOm2rxmL1ckGHQaZsr4?usp=drive_link
+- **g.tec Unicorn documentation**: Official documentation is provided with the Unicorn device and its accompanying software.
+
 
 ### 3.4 Unicorn Hybrid Black connection and configuration
 1. Open _Device Manager_ and select your computer’s Bluetooth module: right-click > **Disable**. There might be multiple modules listed in the Bluetooth section; if the correct one is disabled, all other modules should disappear as a consequence.
