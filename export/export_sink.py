@@ -432,6 +432,6 @@ class ExportSink:
         if v is None:
             return ""  # CSV empty cell for gaps/invalids
         try:
-            return f"{float(v):.9g}"
+            return f"{float(v):.6f}"
         except Exception:
             return str(v)
